@@ -6,7 +6,7 @@ using UnityEngine;
 public class GridController : MonoBehaviour
 {
     public static GridController Instance;
-    public GridMember[,] matrixGrid { get; private set; }
+    public GridMember[,] MatrixGrid { get; private set; }
     public event Action ClearMarkedCombinatedGrids;
 
     private void Awake()
@@ -26,11 +26,11 @@ public class GridController : MonoBehaviour
         {
             for (int column = 0; column < gridSize; column++)
             {
-                if (matrixGrid[rows, column].isClicked)
+                if (MatrixGrid[rows, column].isClicked)
                 {
                     if (CheckNeighbors(rows, column))
                     {
-                        matrixGrid[rows, column].MarkedCombinated();
+                        MatrixGrid[rows, column].MarkedCombinated();
                     }
                 }
             }
@@ -44,22 +44,22 @@ public class GridController : MonoBehaviour
         var gridSize = GridManager.Instance.gridSize;
         int clickedNeighborsCounter = 0;
 
-        if ((column + 1 < gridSize) && matrixGrid[rows, column + 1].isClicked)
+        if ((column + 1 < gridSize) && MatrixGrid[rows, column + 1].isClicked)
         {
             clickedNeighborsCounter++;
         }
 
-        if ((column - 1 >= 0) && matrixGrid[rows, column - 1].isClicked)
+        if ((column - 1 >= 0) && MatrixGrid[rows, column - 1].isClicked)
         {
             clickedNeighborsCounter++;
         }
 
-        if ((rows + 1 < gridSize) && matrixGrid[rows + 1, column].isClicked)
+        if ((rows + 1 < gridSize) && MatrixGrid[rows + 1, column].isClicked)
         {
             clickedNeighborsCounter++;
         }
 
-        if ((rows - 1 >= 0) && matrixGrid[rows - 1, column].isClicked)
+        if ((rows - 1 >= 0) && MatrixGrid[rows - 1, column].isClicked)
         {
             clickedNeighborsCounter++;
         }
@@ -71,29 +71,29 @@ public class GridController : MonoBehaviour
     {
         var gridSize = GridManager.Instance.gridSize;
 
-        if ((column + 1 < gridSize) && matrixGrid[rows, column + 1].isClicked)
+        if ((column + 1 < gridSize) && MatrixGrid[rows, column + 1].isClicked)
         {
-            matrixGrid[rows, column + 1].MarkedCombinated();
+            MatrixGrid[rows, column + 1].MarkedCombinated();
         }
 
-        if ((column - 1 >= 0) && matrixGrid[rows, column - 1].isClicked)
+        if ((column - 1 >= 0) && MatrixGrid[rows, column - 1].isClicked)
         {
-            matrixGrid[rows, column - 1].MarkedCombinated();
+            MatrixGrid[rows, column - 1].MarkedCombinated();
         }
 
-        if ((rows + 1 < gridSize) && matrixGrid[rows + 1, column].isClicked)
+        if ((rows + 1 < gridSize) && MatrixGrid[rows + 1, column].isClicked)
         {
-            matrixGrid[rows + 1, column].MarkedCombinated();
+            MatrixGrid[rows + 1, column].MarkedCombinated();
         }
 
-        if ((rows - 1 >= 0) && matrixGrid[rows - 1, column].isClicked)
+        if ((rows - 1 >= 0) && MatrixGrid[rows - 1, column].isClicked)
         {
-            matrixGrid[rows - 1, column].MarkedCombinated();
+            MatrixGrid[rows - 1, column].MarkedCombinated();
         }
     }
 
     public void DefineMatrix(int size)
     {
-        matrixGrid = new GridMember[size, size];
+        MatrixGrid = new GridMember[size, size];
     }
 }

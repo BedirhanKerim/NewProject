@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4927463758736223912}
   - component: {fileID: 4927463758736223915}
   m_Layer: 5
-  m_Name: Button
+  m_Name: GridMemberPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

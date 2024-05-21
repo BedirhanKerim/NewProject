@@ -8,8 +8,9 @@ using UnityEngine.UI;
 public class GridManager : MonoBehaviour
 {
     public static GridManager Instance;
+    [Header("Grid buyuklugunu girip,Reload Grid Map butonuna tiklayin,RunTime Degistirebilirsiniz.")]
     public int gridSize;
-    public GameObject gridPrefab, gridParentObj;
+    [SerializeField] private GameObject gridPrefab, gridParentObj;
 
     public event Action ClearMap;
 
@@ -35,7 +36,7 @@ public class GridManager : MonoBehaviour
                 var newGridMember = Instantiate(gridPrefab, gridParentObj.transform).GetComponent<GridMember>();
                 newGridMember.columnIndex = column;
                 newGridMember.rowIndex = rows;
-                GridController.Instance.matrixGrid[rows, column] = newGridMember;
+                GridController.Instance.MatrixGrid[rows, column] = newGridMember;
                 //_spawnedObjects.Add(newGridObject);
             }
         }

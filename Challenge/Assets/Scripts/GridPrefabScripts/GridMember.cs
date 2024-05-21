@@ -8,18 +8,18 @@ using Image = UnityEngine.UI.Image;
 
 public class GridMember : MonoBehaviour
 {
-    public int rowIndex;
-    public int columnIndex;
-    public GameObject buttonObj;
-    public Sprite defaultButtonSprite, clickedButtonSprite;
-    public Image gridMemberImage;
+    [HideInInspector] public int rowIndex, columnIndex;
+    [SerializeField] private GameObject buttonObj;
+    [SerializeField] private Sprite defaultButtonSprite, clickedButtonSprite;
+    [SerializeField] private Image gridMemberImage;
     public bool isClicked = false, isCombinated = false;
-    
+
     void Start()
     {
         GridManager.Instance.ClearMap += SelfDestruction;
         GridController.Instance.ClearMarkedCombinatedGrids += ClearMarkedCombinatedGridMember;
     }
+
     public void Clicked()
     {
         isClicked = true;
