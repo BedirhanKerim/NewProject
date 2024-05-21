@@ -12,31 +12,45 @@ public class GridMember : MonoBehaviour
     public int columnIndex;
     public GameObject buttonObj;
     public Sprite defaultButtonSprite, clickedButtonSprite;
-     public Image gridMemberImage;
-    private void Awake()
-    {
-    }
-
+    public Image gridMemberImage;
+    public bool isClicked = false, isCombinated = false;
+    
     void Start()
     {
-        GridManager.Instance.ClearMap +=SelfDestruction;
+        GridManager.Instance.ClearMap += SelfDestruction;
+        GridController.Instance.ClearMarkedCombinatedGrids += ClearMarkedCombinatedGridMember;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Clicked()
     {
-        GridController.Instance.OnClickedAnyGrid(rowIndex,columnIndex);
+        isClicked = true;
+
         gridMemberImage.sprite = clickedButtonSprite;
+        GridController.Instance.OnClickedAnyGrid();
     }
+
     public void SelfDestruction()
     {
-        GridManager.Instance.ClearMap -=SelfDestruction;
-Debug.Log("asd");
+        GridManager.Instance.ClearMap -= SelfDestruction;
+        GridController.Instance.ClearMarkedCombinatedGrids -= ClearMarkedCombinatedGridMember;
         Destroy(buttonObj);
+    }
+
+    public void MarkedCombinated()
+    {
+        if (!isCombinated)
+        {
+            isCombinated = true;
+            GridController.Instance.CombinedGridOperator(rowIndex, columnIndex);
+        }
+    }
+
+    public void ClearMarkedCombinatedGridMember()
+    {
+        if (isCombinated)
+        {
+            gridMemberImage.sprite = defaultButtonSprite;
+            isClicked = false;
+            isCombinated = false;
+        }
     }
 }
