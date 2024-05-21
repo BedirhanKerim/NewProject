@@ -12,6 +12,7 @@ public class GridManager : MonoBehaviour
     public GameObject gridPrefab, gridParentObj;
     private List<GameObject> _spawnedObjects = new List<GameObject>();
 
+    public event Action ClearMap;
     private void Awake()
     {
         Instance = this;
@@ -26,12 +27,25 @@ public class GridManager : MonoBehaviour
 
     private void CreateGridMap()
     {
-        ClearGridMap();
+        GridController.Instance.DefineMatrix(gridSize);
+        //ClearGridMap();
 
-        for (int i = 0; i < gridSize * gridSize; i++)
+     /*   for (int i = 0; i < gridSize * gridSize; i++)
         {
             GameObject newGridObject = Instantiate(gridPrefab, gridParentObj.transform);
             _spawnedObjects.Add(newGridObject);
+        }
+        */
+        for (int rows = 0; rows < gridSize; rows++)
+        {
+            for (int column = 0; column < gridSize; column++)
+            {
+                var newGridMember = Instantiate(gridPrefab, gridParentObj.transform).GetComponent<GridMember>();
+                newGridMember.columnIndex = column;
+                newGridMember.rowIndex = rows;
+               GridController.Instance.matrixGrid[rows, column] = newGridMember;
+                //_spawnedObjects.Add(newGridObject);
+            }
         }
     }
 
@@ -48,17 +62,20 @@ public class GridManager : MonoBehaviour
     public void ReloadGridMap()
     {
         ClearGridMap();
-        CreateGridMap();
-        FixGridScales();
+     //Invoke(nameof(CreateGridMap),1f);   
+    // Invoke(nameof(FixGridScales),1f);
+    CreateGridMap();
+    FixGridScales();
     }
 
     private void ClearGridMap()
     {
-        foreach (GameObject obj in _spawnedObjects)
+        ClearMap?.Invoke();
+     /*   foreach (GameObject obj in _spawnedObjects)
         {
             Destroy(obj);
         }
 
-        _spawnedObjects.Clear();
+        _spawnedObjects.Clear();*/
     }
 }
